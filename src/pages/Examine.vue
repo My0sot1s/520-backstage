@@ -156,12 +156,17 @@ export default {
                 info.id = response.data.data[i].teamId
                 info.taskIndex = response.data.data[i].taskIndex
                 info.name = response.data.data[i].teamName
-                info.date = response.data.data[i].finish_date
-                info.content = response.data.data[i].myDescription
-
+                var now = new Date(response.data.data[i].finish_date)
+                var nian = now.getFullYear()
+                var yue = (now.getMonth() + 1).toString().padStart(2, '0')
+                var ri = now.getDate().toString().padStart(2, '0')
+                var shi = now.getHours().toString().padStart(2, '0')
+                var fen = now.getMinutes().toString().padStart(2, '0')
+                var miao = now.getSeconds().toString().padStart(2, '0')
+                info.date = `${nian}-${yue}-${ri} ${shi}:${fen}:${miao}`
+                info.content = response.data.data[i].myDescriptio
                 window.fetch(response.data.data[i].uploadLocation)
                 .then(response => response.text().then(r => info.img = r))
-
                 this.tableData.push(info)
             }
         }))
