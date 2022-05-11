@@ -27,14 +27,18 @@ export default {
                 method:'post',
                 url:'/authority/rfc59fre',
                 data: {
-                    password:"4vWrwlKd24AFDAashyt32WER12TJas233WRs",
-                    username:"ASFHWUIEFVsafcbdsiafAETDZV324Gasfa12E"
+                    password: this.password,
+                    username: this.username
                 }
             })
             .then((response => {
-                localStorage.setItem("token", response.data.data);
-                console.log(response.data.data)
-                this.$router.replace('/examine')
+                if(response.data.code == 200){
+                    localStorage.setItem("token", response.data.data);
+                    console.log(response.data.data)
+                    this.$router.replace('/examine')
+                }else{
+                    alert(response.data.message)
+                }
             }))
             .catch((error) => {
                 console.log(error)

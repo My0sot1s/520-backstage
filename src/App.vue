@@ -22,7 +22,7 @@
             <el-avatar shape="circle" :size="50" :fit="fit" :src="url"></el-avatar>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;您好！管理员，欢迎来到后台管理系统</span>
           </div>
-          <el-link :underline="false">
+          <el-link :underline="false" @click="logout()">
             <i class="el-icon-right" style="margin-right: 15px"></i>
              <span>退出登录</span>
           </el-link>
@@ -47,6 +47,12 @@ export default {
       fit:'cover',
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
       url: 'http://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico'
+    }
+  },
+  methods: {
+    logout(){
+      this.$router.replace('/');
+      localStorage.removeItem("token");
     }
   }
 }
