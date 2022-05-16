@@ -8,18 +8,24 @@
         fixed
         prop="name"
         label="申请人"
-        min-width="200">
+        min-width="100">
+        </el-table-column>
+        <el-table-column
+        prop=task
+        label="任务名称"
+        min-width="200"
+        align="center">
         </el-table-column>
         <el-table-column
         prop="content"
         label="文案内容"
-        min-width="300"
+        min-width="200"
         align="center">
         </el-table-column>
         <el-table-column
         prop="date"
         label="申请时间"
-        min-width="300"
+        min-width="200"
         align="center">
         </el-table-column>
         <el-table-column
@@ -40,11 +46,12 @@
     <el-dialog
         :title="this.dialogTitle"
         :visible.sync="dialogVisible1"
+        style="font-weight:bold"
         width="30%"
         center>
-        <div style="text-align:center; margin-bottom:5%">{{dialogText}}</div>
+        <div style="text-align:center; margin-bottom:5%;">{{dialogText}}</div>
         <el-image
-            style="width: 100%; height: 200px"
+            style="width: 100%; height: 100%"
             :src="this.tableData[indexNow].img"
             fit="fill"></el-image>
         <span slot="footer" class="dialog-footer">
@@ -135,7 +142,8 @@ export default {
         dialogText: '',
         indexNow: 0,
         reason:'',
-        tableData: []
+        tableData: [],
+        tasks: ["美食与你", "运动已开始", "鹊桥相遇", "为你保驾护航", "饮茶先啦", "花花世界迷人眼"]
       }
     },
     mounted() {
@@ -155,6 +163,7 @@ export default {
                 let info = new Object()
                 info.id = response.data.data[i].teamId
                 info.taskIndex = response.data.data[i].taskIndex
+                info.task = this.tasks[info.taskIndex-1]
                 info.name = response.data.data[i].teamName
                 var now = new Date(response.data.data[i].finish_date)
                 var nian = now.getFullYear()
@@ -164,7 +173,7 @@ export default {
                 var fen = now.getMinutes().toString().padStart(2, '0')
                 var miao = now.getSeconds().toString().padStart(2, '0')
                 info.date = `${nian}-${yue}-${ri} ${shi}:${fen}:${miao}`
-                info.content = response.data.data[i].myDescriptio
+                info.content = response.data.data[i].myDescription
                 window.fetch(response.data.data[i].uploadLocation)
                 .then(response => response.text().then(r => info.img = r))
                 this.tableData.push(info)

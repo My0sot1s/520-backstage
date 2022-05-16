@@ -46,7 +46,7 @@ export default {
     return {
       fit:'cover',
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-      url: 'http://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico'
+      url: '..\\assets\\pictures\\sends.png'
     }
   },
   methods: {
