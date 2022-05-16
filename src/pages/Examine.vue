@@ -3,7 +3,7 @@
     <el-table
         :data="tableData"
         style="width: 100%"
-        max-height="100vh">
+        :max-height="tableHeight">
         <el-table-column
         fixed
         prop="name"
@@ -143,6 +143,7 @@ export default {
         indexNow: 0,
         reason:'',
         tableData: [],
+        tableHeight: 300,
         tasks: ["美食与你", "运动已开始", "鹊桥相遇", "为你保驾护航", "饮茶先啦", "花花世界迷人眼"]
       }
     },
@@ -150,6 +151,10 @@ export default {
         if(!localStorage.token){
             this.$router.replace('/login')
         }
+        this.tableHeight = window.innerHeight - 125;
+        window.addEventListener("resize", () => {
+            this.tableHeight = window.innerHeight - 125;
+        })
         this.axios({
             method:'get',
             url:'/backend/info/work',
