@@ -46,7 +46,7 @@ export default {
     return {
       fit:'cover',
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-      url: '..\\assets\\pictures\\sends.png'
+      url: '..//assets//pictures//sends.png'
     }
   },
   methods: {

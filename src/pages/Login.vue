@@ -1,7 +1,7 @@
 <template>
   <div id="login">
       <div id="logo1">
-           <el-avatar src='..\assets\pictures\sends.png'></el-avatar>
+           <el-avatar src='..//assets//pictures//sends.png'></el-avatar>
       </div>
       <div id="broad">
           <div id="welcome">欢迎进入小程序后台管理系统</div>
