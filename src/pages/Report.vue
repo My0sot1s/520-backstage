@@ -39,7 +39,7 @@
     </el-table>
     <el-dialog
         :title="this.dialogTitle"
-        :visible.sync="dialogVisible1"
+        :visible.sync="this.dialogVisible"
         style="font-weight:bold"
         width="30%"
         center>
@@ -60,7 +60,7 @@
 export default {
     data() {
       return {
-        dialogVisible1: false,
+        dialogVisible: false,
         dialogTitle: '',
         dialogText: '',
         indexNow: 0,
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         examine(index, rows) {
-            this.dialogVisible1 = true;
+            this.dialogVisible = true;
             this.dialogTitle = this.tableData[index].name
             this.dialogText = "举报理由:\n" + this.tableData[index].reportReason
             this.indexNow = index
@@ -91,7 +91,7 @@ export default {
             })
             .then((response => {
                 if(response.data.code == 200){
-                    this.dialogVisible1 = false  
+                    this.dialogVisible = false  
                     this.tableData.splice(this.indexNow, 1)
                 }else{
                     alert(response.data.message)
@@ -119,7 +119,7 @@ export default {
         })
         .then((response => {
             if(response.data.code == 200){
-                this.dialogVisible1 = false
+                this.dialogVisible = false
                 this.tableData.splice(this.indexNow, 1)
             }else{
                 alert(response.data.message)

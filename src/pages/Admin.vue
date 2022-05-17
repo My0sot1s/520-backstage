@@ -1,5 +1,9 @@
 <template>
   <div id="admin">
+      <el-button type="warning"  class="btns" round @click="handleAnnounce()">
+          <i class="el-icon-s-promotion"></i>
+          <div>公告发布</div>
+      </el-button>
       <el-button type="danger"  class="btns" round @click="handleReport()">
           <i class="el-icon-warning"></i>
           <div>举报处理</div>
@@ -12,6 +16,9 @@ export default {
     methods: {
         handleReport() {
             this.$router.replace('/report')
+        },
+        handleAnnounce() {
+            this.$router.replace('/announce')
         }
     },
     mounted() {
@@ -37,6 +44,7 @@ export default {
     .btns {
         width: 10vw;
         height: 13vw;
+        margin-right: 3vw !important;
         display: flex;
         justify-content: center;
         align-content: center;
@@ -48,7 +56,7 @@ export default {
         text-align: center;
     }
     .btns div {
-        margin-top : 2vw;
+        margin-top: 2vw;
         font-size: 1vw;
     }
 </style>

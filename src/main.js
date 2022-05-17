@@ -7,6 +7,7 @@ import axios from 'axios'
 import '../theme/index.css'
 
 axios.defaults.baseURL = 'https://single.sends.cc/api'
+//axios.defaults.baseURL = 'http://139.224.68.119:13284/'
 Vue.prototype.axios = axios
 
 Vue.use(ElementUI)

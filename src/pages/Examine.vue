@@ -105,6 +105,8 @@ export default {
                 this.dialogVisible2 = false
                 this.dialogVisible1 = false  
                 this.tableData.splice(this.indexNow, 1)
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {
@@ -127,6 +129,8 @@ export default {
             if(response.data.code == 200){
                 this.dialogVisible1 = false
                 this.tableData.splice(this.indexNow, 1)
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {
