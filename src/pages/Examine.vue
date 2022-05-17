@@ -11,7 +11,7 @@
         min-width="100">
         </el-table-column>
         <el-table-column
-        prop=task
+        prop="task"
         label="任务名称"
         min-width="200"
         align="center">
@@ -52,7 +52,7 @@
         <div style="text-align:center; margin-bottom:5%;">{{dialogText}}</div>
         <el-image
             style="width: 100%; height: 100%"
-            :src="this.tableData[indexNow].img"
+            :src="this.tableData[this.indexNow].img"
             fit="fill"></el-image>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible2 = true">驳 回</el-button>
@@ -163,25 +163,29 @@ export default {
             },
         })
         .then((response => {
-            console.log(response.data.data)
-            for(let i = 0; i < response.data.data.length; i++){
-                let info = new Object()
-                info.id = response.data.data[i].teamId
-                info.taskIndex = response.data.data[i].taskIndex
-                info.task = this.tasks[info.taskIndex-1]
-                info.name = response.data.data[i].teamName
-                var now = new Date(response.data.data[i].finish_date)
-                var nian = now.getFullYear()
-                var yue = (now.getMonth() + 1).toString().padStart(2, '0')
-                var ri = now.getDate().toString().padStart(2, '0')
-                var shi = now.getHours().toString().padStart(2, '0')
-                var fen = now.getMinutes().toString().padStart(2, '0')
-                var miao = now.getSeconds().toString().padStart(2, '0')
-                info.date = `${nian}-${yue}-${ri} ${shi}:${fen}:${miao}`
-                info.content = response.data.data[i].myDescription
-                window.fetch(response.data.data[i].uploadLocation)
-                .then(response => response.text().then(r => info.img = r))
-                this.tableData.push(info)
+            if(response.data.code == 200){
+                console.log(response.data.data)
+                for(let i = 0; i < response.data.data.length; i++){
+                    let info = new Object()
+                    info.id = response.data.data[i].teamId
+                    info.taskIndex = response.data.data[i].taskIndex
+                    info.task = this.tasks[info.taskIndex-1]
+                    info.name = response.data.data[i].teamName
+                    var now = new Date(response.data.data[i].finish_date)
+                    var nian = now.getFullYear()
+                    var yue = (now.getMonth() + 1).toString().padStart(2, '0')
+                    var ri = now.getDate().toString().padStart(2, '0')
+                    var shi = now.getHours().toString().padStart(2, '0')
+                    var fen = now.getMinutes().toString().padStart(2, '0')
+                    var miao = now.getSeconds().toString().padStart(2, '0')
+                    info.date = `${nian}-${yue}-${ri} ${shi}:${fen}:${miao}`
+                    info.content = response.data.data[i].myDescription
+                    window.fetch(response.data.data[i].uploadLocation)
+                    .then(response => response.text().then(r => info.img = r))
+                    this.tableData.push(info)
+                }
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {
