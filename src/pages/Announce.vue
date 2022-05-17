@@ -54,7 +54,6 @@ export default {
                 endTime: this.value[1].getTime(),
                 title: this.title,
                 text: this.content,
-                id:0
             }
         })
         .then((response => {
