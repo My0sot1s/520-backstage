@@ -3,23 +3,29 @@
     <el-table
         :data="tableData"
         style="width: 100%"
-        max-height="100vh">
+        :max-height="tableHeight">
         <el-table-column
         fixed
         prop="name"
         label="申请人"
-        min-width="200">
+        min-width="100">
+        </el-table-column>
+        <el-table-column
+        prop="task"
+        label="任务名称"
+        min-width="200"
+        align="center">
         </el-table-column>
         <el-table-column
         prop="content"
         label="文案内容"
-        min-width="300"
+        min-width="200"
         align="center">
         </el-table-column>
         <el-table-column
         prop="date"
         label="申请时间"
-        min-width="300"
+        min-width="200"
         align="center">
         </el-table-column>
         <el-table-column
@@ -40,12 +46,14 @@
     <el-dialog
         :title="this.dialogTitle"
         :visible.sync="dialogVisible1"
+        style="font-weight:bold"
         width="30%"
         center>
-        <div style="text-align:center; margin-bottom:5%">{{dialogText}}</div>
+        <div style="text-align:center; margin-bottom:5%;">{{dialogText}}</div>
         <el-image
-            style="width: 100%; height: 200px"
-            :src="this.tableData[indexNow].img"
+            v-if="this.indexNow != 0"
+            style="width: 100%; height: 100%"
+            :src="this.tableData[this.indexNow].img"
             fit="fill"></el-image>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible2 = true">驳 回</el-button>
@@ -98,6 +106,8 @@ export default {
                 this.dialogVisible2 = false
                 this.dialogVisible1 = false  
                 this.tableData.splice(this.indexNow, 1)
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {
@@ -120,6 +130,8 @@ export default {
             if(response.data.code == 200){
                 this.dialogVisible1 = false
                 this.tableData.splice(this.indexNow, 1)
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {
@@ -135,13 +147,19 @@ export default {
         dialogText: '',
         indexNow: 0,
         reason:'',
-        tableData: []
+        tableData: [],
+        tableHeight: 300,
+        tasks: ["美食与你", "运动已开始", "鹊桥相遇", "为你保驾护航", "饮茶先啦", "花花世界迷人眼"]
       }
     },
     mounted() {
         if(!localStorage.token){
             this.$router.replace('/login')
         }
+        this.tableHeight = window.innerHeight - 125;
+        window.addEventListener("resize", () => {
+            this.tableHeight = window.innerHeight - 125;
+        })
         this.axios({
             method:'get',
             url:'/backend/info/work',
@@ -150,18 +168,29 @@ export default {
             },
         })
         .then((response => {
-            console.log(response.data.data)
-            for(let i = 0; i < response.data.data.length; i++){
-                let info = new Object()
-                info.id = response.data.data[i].teamId
-                info.taskIndex = response.data.data[i].taskIndex
-                info.name = response.data.data[i].teamName
-                let date = new Date(response.data.data[i].finish_date)
-                info.date = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" "+date.getHours()+":"+date.getMinutes+":"+date.getSeconds()
-                info.content = response.data.data[i].myDescription
-                window.fetch(response.data.data[i].uploadLocation)
-                .then(response => response.text().then(r => info.img = r))
-                this.tableData.push(info)
+            if(response.data.code == 200){
+                console.log(response.data.data)
+                for(let i = 0; i < response.data.data.length; i++){
+                    let info = new Object()
+                    info.id = response.data.data[i].teamId
+                    info.taskIndex = response.data.data[i].taskIndex
+                    info.task = this.tasks[info.taskIndex-1]
+                    info.name = response.data.data[i].teamName
+                    var now = new Date(response.data.data[i].finish_date)
+                    var nian = now.getFullYear()
+                    var yue = (now.getMonth() + 1).toString().padStart(2, '0')
+                    var ri = now.getDate().toString().padStart(2, '0')
+                    var shi = now.getHours().toString().padStart(2, '0')
+                    var fen = now.getMinutes().toString().padStart(2, '0')
+                    var miao = now.getSeconds().toString().padStart(2, '0')
+                    info.date = `${nian}-${yue}-${ri} ${shi}:${fen}:${miao}`
+                    info.content = response.data.data[i].myDescription
+                    window.fetch(response.data.data[i].uploadLocation)
+                    .then(response => response.text().then(r => info.img = r))
+                    this.tableData.push(info)
+                }
+            }else{
+                alert(response.data.message)
             }
         }))
         .catch((error) => {

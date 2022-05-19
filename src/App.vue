@@ -2,15 +2,15 @@
   <div id="app">
     <el-container style="height: 100vh; border: 1px solid #eee; background-color: rgb(228,228,228)" >
       <el-aside width="200px" style="background-color: #FFFFFF">
-        <el-menu default-active = 2>
+        <el-menu router default-active = "examine">
           <el-avatar shape="square" :size="200" :fit="fit" :src="url" ></el-avatar>
-          <el-menu-item index="1">
+          <el-menu-item index="">
             <template slot="title"><i class="el-icon-s-home"></i>首页</template>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="examine">
             <template slot="title"><i class="el-icon-s-check"></i>审核</template>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="admin">
             <template slot="title"><i class="el-icon-menu"></i>管理</template>
           </el-menu-item>
         </el-menu>
@@ -46,7 +46,7 @@ export default {
     return {
       fit:'cover',
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-      url: 'http://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico'
+      url: '..//assets//pictures//sends.png'
     }
   },
   methods: {

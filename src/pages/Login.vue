@@ -1,7 +1,7 @@
 <template>
   <div id="login">
       <div id="logo1">
-           <el-avatar src='http://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico'></el-avatar>
+           <el-avatar src='..//assets//pictures//sends.png'></el-avatar>
       </div>
       <div id="broad">
           <div id="welcome">欢迎进入小程序后台管理系统</div>
@@ -78,6 +78,10 @@ export default {
     #broad {
         flex-grow: 1;
         padding: 10% 5% 15% 5%;
+        position: relative;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 50%;
         display: flex;
         flex-direction: column;
         justify-content: center;
