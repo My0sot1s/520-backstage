@@ -3,7 +3,8 @@
     <el-table
         :data="tableData"
         style="width: 100%"
-        :max-height="tableHeight">
+        :max-height="tableHeight"
+        empty-text="暂无待处理的举报">
         <el-table-column
         fixed
         prop="name"
